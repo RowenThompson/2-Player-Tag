@@ -11,13 +11,13 @@ class Displaysurf():
 spawnpoint_1_x = Displaysurf().width/25
 spawnpoint_1_y = Displaysurf().height/25
 class Player1():
-    def __init__(self, score, x=spawnpoint_1_x, y=spawnpoint_1_y, name="Bob", color=(0, 0, 255), radius=25):
-        self.x = x
-        self.y = y
-        self.name = name
-        self.color = color
-        self.radius = radius
-        self.score = score
+    def __init__(self):
+        self.x = spawnpoint_1_x
+        self.y = spawnpoint_1_y
+        self.name = "Bob"
+        self.color = (0,0,255)
+        self.radius = 25
+        self.speed = 25
     def show(self):
         pygame.draw.circle(Displaysurf().displaysurf, self.color, (self.x, self.y), self.radius)
     def controls(self):
@@ -25,10 +25,17 @@ class Player1():
             if event.type == pygame.QUIT:
                 quit_game()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_w:
-                    self.y -= 5
                 if event.key == pygame.K_ESCAPE:
                     quit_game()
+        keys = pygame.key.get_pressed()
+        if keys == pygame.K_w:
+            self.y -= self.speed
+        if keys == pygame.K_s:
+            self.y += self.speed
+        if keys == pygame.K_a:
+            self.x -= self.speed
+        if keys == pygame.K_d:
+            self.x += self.speed
 def quit_game():
     pygame.quit()
     sys.exit()
@@ -41,7 +48,6 @@ def main():
     spawnpoint_2_x = Displaysurf().width/12
     spawnpoint_2_y = Displaysurf().height/12
     FPS = 60
-    score = 0
     clock = pygame.time.Clock()
     game_state = "tag"
     while game_state == "tag":
