@@ -10,10 +10,14 @@ class Displaysurf():
         pygame.display.set_mode(self.resolution)
 spawnpoint_1_x = Displaysurf().width/25
 spawnpoint_1_y = Displaysurf().height/25
+player_y = 0
+player_x = 0
 class Player1():
     def __init__(self):
-        self.x = spawnpoint_1_x
-        self.y = spawnpoint_1_y
+        self.move_x = 0
+        self.move_y = 0
+        self.x = spawnpoint_1_x + self.move_x
+        self.y = spawnpoint_1_y + self.move_y
         self.name = "Bob"
         self.color = (0,0,255)
         self.radius = 25
@@ -29,13 +33,13 @@ class Player1():
                     quit_game()
         keys = pygame.key.get_pressed()
         if keys == pygame.K_w:
-            self.y -= self.speed
+            self.move_y -= self.speed
         if keys == pygame.K_s:
-            self.y += self.speed
+            self.move_y += self.speed
         if keys == pygame.K_a:
-            self.x -= self.speed
+            self.move_x -= self.speed
         if keys == pygame.K_d:
-            self.x += self.speed
+            self.move_x += self.speed
 def quit_game():
     pygame.quit()
     sys.exit()
@@ -51,9 +55,11 @@ def main():
     clock = pygame.time.Clock()
     game_state = "tag"
     while game_state == "tag":
+        Player1().x += 5
         Player1().controls()
         Player1().show()
         pygame.display.update()
+        pygame.display.flip()
         clock.tick(FPS)
 
 main()
